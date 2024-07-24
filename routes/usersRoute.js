@@ -1,9 +1,14 @@
 import exppress from 'express';
-import { registerUserCtrl, loginUserCtrl } from '../controllers/usersCtrl.js';
+import { 
+    registerUserCtrl, 
+    loginUserCtrl, 
+    getUserProfileCtrl } from '../controllers/usersCtrl.js';
+import { isLoggedIn } from '../middleware/isLoggedIn.js';
 
 const userRoutes = exppress.Router();
 
-userRoutes.post('/api/v1/users/register', registerUserCtrl);
-userRoutes.post('/api/v1/users/login', loginUserCtrl);
+userRoutes.post('/register', registerUserCtrl);
+userRoutes.post('/login', loginUserCtrl);
+userRoutes.get('/profile', isLoggedIn, getUserProfileCtrl);
 
 export default userRoutes;
