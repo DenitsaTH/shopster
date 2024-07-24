@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from 'express';
-import { globalErrorHandler } from "../middleware/globalErrorHandler.js";
+import { globalErrorHandler, notFound } from "../middleware/globalErrorHandler.js";
 import userRoutes from "../routes/usersRoute.js";
 import dbConnnect from '../config/dbConnect.js';
 
@@ -18,6 +18,7 @@ app.use(express.json());
 app.use('/', userRoutes);
 
 // error middleware
+app.use(notFound);
 app.use(globalErrorHandler);
 
 export default app;
