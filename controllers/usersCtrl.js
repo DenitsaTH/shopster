@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
+import generateToken from '../utils/generateToken.js';
 
 export const registerUserCtrl = asyncHandler(async (req, res) => {
     const { fullname, email, password } = req.body;
@@ -41,9 +42,17 @@ export const loginUserCtrl = asyncHandler(async (req, res) => {
     if (userFound && await bcrypt.compare(password, userFound?.password)) {
         res.json({
             message: 'Successful login',
-            userFound
+            userFound,
+            token: generateToken(userFound?._id)
         });
     } else {
         throw new Error('Invalid login credentials');
     }
 });
+
+
+export const getUserProfileCtrl = asyncHandler(async(req, res) => {
+    res.json({
+        msg: 'Welcome to Profile Page',
+    })
+})
