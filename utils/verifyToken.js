@@ -10,3 +10,5 @@ export const verifyToken = (token) => {
         }
     });
 };
+
+export default verifyToken;

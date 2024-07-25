@@ -8,3 +8,5 @@ export const getTokenFromHeader = (req) => {
         return token;
     }
 };
+
+export default getTokenFromHeader;

@@ -5,10 +5,10 @@ import {
     getUserProfileCtrl } from '../controllers/usersCtrl.js';
 import { isLoggedIn } from '../middleware/isLoggedIn.js';
 
-const userRoutes = exppress.Router();
+const userRouter = exppress.Router();
 
-userRoutes.post('/register', registerUserCtrl);
-userRoutes.post('/login', loginUserCtrl);
-userRoutes.get('/profile', isLoggedIn, getUserProfileCtrl);
+userRouter.post('/register', registerUserCtrl);
+userRouter.post('/login', loginUserCtrl);
+userRouter.get('/profile', isLoggedIn, getUserProfileCtrl);
 
-export default userRoutes;
+export default userRouter;
