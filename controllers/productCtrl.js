@@ -29,3 +29,13 @@ export const createProductCtrl = AsyncHandler(async(req,res) => {
         product,
     });
 });
+
+
+export const getProductCtrl = AsyncHandler(async(req, res) => {
+    const product = await Product.find();
+    res.json({
+        status: "success",
+        product
+    });
+
+});
