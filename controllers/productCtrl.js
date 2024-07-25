@@ -2,25 +2,25 @@ import AsyncHandler from 'express-async-handler';
 import Product from '../models/Product.js';
 
 
-export const createProductCtrl = AsyncHandler(async(req,res) => {
-    const {name, description, brand, category, sizes, 
+export const createProductCtrl = AsyncHandler(async (req, res) => {
+    const { name, description, brand, category, sizes,
         colors, price, totalQty } = req.body;
 
-    const productExists = await Product.findOne({name});
+    const productExists = await Product.findOne({ name });
 
-    if(productExists){
+    if (productExists) {
         throw new Error('Product already exists');
     }
 
     const product = await Product.create({
         name,
         description,
-        brand, 
-        category, 
-        sizes, 
-        colors, 
+        brand,
+        category,
+        sizes,
+        colors,
         user: req.userAuthId,
-        price, 
+        price,
         totalQty,
     });
     res.json({
@@ -31,11 +31,19 @@ export const createProductCtrl = AsyncHandler(async(req,res) => {
 });
 
 
-export const getProductCtrl = AsyncHandler(async(req, res) => {
-    const product = await Product.find();
+export const getProductCtrl = AsyncHandler(async (req, res) => {
+    let productQuery = Product.find();
+
+    if (req.query.name) {
+        productQuery = productQuery.find({
+            name: { $regex: req.query.name, $options: 'i' },
+        });
+    }
+
+    const product = await productQuery;
+
     res.json({
         status: "success",
         product
     });
-
 });
