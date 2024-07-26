@@ -122,3 +122,29 @@ export const getProductCtrl = asyncHandler(async (req, res) => {
         product,
     });
 });
+
+
+export const updateProductCtrl = asyncHandler(async (req, res) => {
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            name,
+            description,
+            brand,
+            category,
+            sizes,
+            colors,
+            user: req.userAuthId,
+            price,
+            totalQty,
+        },
+        {
+            new: true,
+        }
+    );
+    res.json({
+        status: 'success',
+        message: 'Product updated successfully',
+        product,
+    });
+});
