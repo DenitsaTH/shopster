@@ -40,6 +40,30 @@ export const getProductCtrl = AsyncHandler(async (req, res) => {
         });
     }
 
+    if (req.query.brand) {
+        productQuery = productQuery.find({
+            brand: { $regex: req.query.brand, $options: 'i' },
+        });
+    }
+
+    if (req.query.category) {
+        productQuery = productQuery.find({
+            category: { $regex: req.query.category, $options: 'i' },
+        });
+    }
+
+    if (req.query.color) {
+        productQuery = productQuery.find({
+            colors: { $regex: req.query.color, $options: 'i' },
+        });
+    }
+
+    if (req.query.size) {
+        productQuery = productQuery.find({
+            sizes: { $regex: req.query.size, $options: 'i' },
+        });
+    }
+
     const product = await productQuery;
 
     res.json({
