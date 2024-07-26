@@ -67,14 +67,43 @@ export const getProductCtrl = AsyncHandler(async (req, res) => {
     if (req.query.price) {
         const priceRange = req.query.price.split("-");
         productQuery = productQuery.find({
-            price:{$gte: priceRange[0], $lte: priceRange[1]},
+            price: { $gte: priceRange[0], $lte: priceRange[1] },
         })
     }
 
-    const product = await productQuery;
+    const page = parseInt(req.query.page) ? parseInt(req.query.page) : 1;  // defaults to 1 if no value is provided
+    const limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 1;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const total = await Product.countDocuments();
+
+    productQuery = productQuery.skip(startIndex).limit(limit);
+
+    const pagination = {}
+
+    if (endIndex < total) {
+        pagination.next = {
+            page: page + 1,
+            limit,
+        };
+
+        if (startIndex > 0) {
+            pagination.prev = {
+                page: page - 1,
+                limit,
+            };
+        }
+
+    }
+    const products = await productQuery;
 
     res.json({
         status: "success",
-        product
+        total,
+        results: products.length,
+        pagination,
+        message: 'Products fetched successfully',
+        products
     });
 });
