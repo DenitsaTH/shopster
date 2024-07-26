@@ -1,8 +1,8 @@
-import AsyncHandler from 'express-async-handler';
+import asyncHandler from 'express-async-handler';
 import Product from '../models/Product.js';
 
 
-export const createProductCtrl = AsyncHandler(async (req, res) => {
+export const createProductCtrl = asyncHandler(async (req, res) => {
     const { name, description, brand, category, sizes,
         colors, price, totalQty } = req.body;
 
@@ -31,7 +31,7 @@ export const createProductCtrl = AsyncHandler(async (req, res) => {
 });
 
 
-export const getProductCtrl = AsyncHandler(async (req, res) => {
+export const getProductsCtrl = asyncHandler(async (req, res) => {
     let productQuery = Product.find();
 
     if (req.query.name) {
@@ -105,5 +105,20 @@ export const getProductCtrl = AsyncHandler(async (req, res) => {
         pagination,
         message: 'Products fetched successfully',
         products
+    });
+});
+
+
+export const getProductCtrl = asyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+        throw new Error('Product not found');
+    }
+
+    res.json({
+        status: 'success',
+        message: 'Product fetched successfully',
+        product,
     });
 });
