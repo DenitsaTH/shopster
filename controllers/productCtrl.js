@@ -148,3 +148,13 @@ export const updateProductCtrl = asyncHandler(async (req, res) => {
         product,
     });
 });
+
+
+export const deleteProductCtrl = asyncHandler(async (req, res) => {
+    await Product.findByIdAndDelete(req.params.id);
+
+    res.json({
+        status: 'success',
+        message: 'Product deleted successfully'
+    });
+});
