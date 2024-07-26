@@ -64,6 +64,13 @@ export const getProductCtrl = AsyncHandler(async (req, res) => {
         });
     }
 
+    if (req.query.price) {
+        const priceRange = req.query.price.split("-");
+        productQuery = productQuery.find({
+            price:{$gte: priceRange[0], $lte: priceRange[1]},
+        })
+    }
+
     const product = await productQuery;
 
     res.json({
