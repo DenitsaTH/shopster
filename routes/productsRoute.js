@@ -1,9 +1,11 @@
 import exppress from 'express';
-import { 
-    createProductCtrl, 
-    getProductsCtrl, 
-    getProductCtrl, 
-    updateProductCtrl } from '../controllers/productCtrl.js';
+import {
+    createProductCtrl,
+    getProductsCtrl,
+    getProductCtrl,
+    updateProductCtrl,
+    deleteProductCtrl
+} from '../controllers/productCtrl.js';
 import isLoggedIn from '../middleware/isLoggedIn.js'
 
 const productsRouter = exppress.Router();

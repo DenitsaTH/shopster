@@ -25,7 +25,7 @@ export const createProductCtrl = asyncHandler(async (req, res) => {
     });
     res.json({
         status: 'success',
-        message: 'Product created successfully',
+        message: 'Product successfully created',
         product,
     });
 });
