@@ -6,6 +6,7 @@ const CategorySchema = new Schema(
         name: {
             type: String,
             required: true,
+            unique: true,
         },
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -14,7 +15,7 @@ const CategorySchema = new Schema(
         },
         image: {
             type: String,
-            required: true,
+            required: false,
         },
         products: [
             {
