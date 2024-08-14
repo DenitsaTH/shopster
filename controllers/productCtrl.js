@@ -125,6 +125,18 @@ export const getProductCtrl = asyncHandler(async (req, res) => {
 
 
 export const updateProductCtrl = asyncHandler(async (req, res) => {
+    const {
+        name,
+        description,
+        category,
+        sizes,
+        colors,
+        user,
+        price,
+        totalQty,
+        brand,
+      } = req.body;
+    
     const product = await Product.findByIdAndUpdate(
         req.params.id,
         {
@@ -134,7 +146,7 @@ export const updateProductCtrl = asyncHandler(async (req, res) => {
             category,
             sizes,
             colors,
-            user: req.userAuthId,
+            user,
             price,
             totalQty,
         },
