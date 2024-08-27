@@ -20,7 +20,7 @@ export const createProductCtrl = asyncHandler(async (req, res) => {
         throw new Error ('Category not found');
     }
 
-    const brandFound = await Brand.findOne({ name: brand, });
+    const brandFound = await Brand.findOne({ name: brand?.toLowerCase(), });
 
     if (!brandFound) {
         throw new Error ('Brand not found');
