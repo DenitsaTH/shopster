@@ -5,6 +5,7 @@ import generateToken from '../utils/generateToken.js';
 import getTokenFromHeader from '../utils/getTokenFromHeader.js';
 import { verifyToken } from '../utils/verifyToken.js';
 
+
 export const registerUserCtrl = asyncHandler(async (req, res) => {
     const { fullname, email, password } = req.body;
 
@@ -53,11 +54,44 @@ export const loginUserCtrl = asyncHandler(async (req, res) => {
 });
 
 
-export const getUserProfileCtrl = asyncHandler(async(req, res) => {
+export const getUserProfileCtrl = asyncHandler(async (req, res) => {
     const token = getTokenFromHeader(req);
     const verify = verifyToken(token);
 
     res.json({
         msg: 'Welcome to Profile Page',
+    });
+});
+
+
+export const updateShippingAddressCtrl = asyncHandler(async (req, res) => {
+    const { firstName,
+        lastName,
+        address,
+        city,
+        postalCode,
+        province,
+        phoneNumber } = req.body;
+
+    const user = await User.findByIdAndUpdate(req.userAuthId, {
+        shippingAddres: {
+            firstName,
+            lastName,
+            address,
+            city,
+            postalCode,
+            province,
+            phoneNumber
+        },
+        hasShippingAddress: true
+    },
+        {
+            new: true,
+        });
+
+    res.json({
+        status: 'success',
+        message: 'Shipping address successfully updated',
+        user,
     });
 });
