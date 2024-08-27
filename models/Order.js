@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+
 const Schema = mongoose.Schema;
 
 const randomTxt = Math.random().toString(36).substring(7).toLocaleUpperCase();
-const randomNumbers = math.floor(1000 + Math.random() * 90000);
+const randomNumbers = Math.floor(1000 + Math.random() * 90000);
 
 const OrderSchema = new Schema({
     user: {
@@ -34,7 +35,11 @@ const OrderSchema = new Schema({
         type: String,
         default: 'Not specified',
     },
-    currency:{
+    totalPrice: {
+        type: Number,
+        default: 0.0,
+    },
+    currency: {
         type: String,
         default: 'Not paid',
     },
@@ -44,8 +49,8 @@ const OrderSchema = new Schema({
         enum: ['pending', 'processing', 'shipped', 'delivered'],
     },
     deliveredAt: {
-        type: Date, 
-    }, 
+        type: Date,
+    },
 }, {
     timestamps: true,
 });
