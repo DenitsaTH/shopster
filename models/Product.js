@@ -67,6 +67,11 @@ const ProductSchema = new Schema({
 
 // Virtual properties - do not persist in the MongoDB database but are computed dynamically
 // using regular function here to have access to `this` keyword - the instance of the project we are fetching
+ProductSchema.virtual('qtyLeft').get(function () {
+    const product = this
+    return product.totalQty - product.totalSold;
+});
+
 ProductSchema.virtual('totalReviews').get(function () {
     const product = this;
     return product?.reviews?.length;
